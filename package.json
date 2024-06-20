@@ -1,0 +1,41 @@
+{
+    "name": "uk-post",
+    "version": "1.0.0",
+    "description": "A REST Api for UK Postcodes",
+    "main": "server.js",
+    "scripts": {
+        "start": "node  app/server.js",
+        "test": "npm test"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/bigtree-its/uk-post.git"
+    },
+    "keywords": [
+        "UK",
+        "Postcodes"
+    ],
+    "author": "Nava Krishnan",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/bigtree-its/uk-post/issues"
+    },
+    "homepage": "https://github.com/bigtree-its/uk-post#readme",
+    "dependencies": {
+        "body-parser": "^1.20.2",
+        "console-stamp": "^3.1.2",
+        "cors": "^2.8.5",
+        "csv-parse": "^5.5.6",
+        "dotenv": "^16.4.5",
+        "express": "^4.19.2",
+        "express-jwt": "^8.4.1",
+        "express-validator": "^7.1.0",
+        "jsonwebtoken": "^9.0.2",
+        "mongoose": "^8.4.1",
+        "mongoose-aggregate-paginate-v2": "^1.0.7",
+        "mongoose-mpath": "^3.0.2",
+        "mongoose-paginate-v2": "^1.8.2",
+        "nodemon": "^3.1.3",
+        "underscore": "^1.13.6"
+    }
+}
