@@ -63,6 +63,9 @@ exports.lookup = (req, res) => {
         // query.where('prefix', req.query.prefix);
         query.where({ 'prefix': { '$regex': req.query.prefix, $options: 'i' } });
     }
+    if (req.query.popular) {
+        query.where('popular', req.query.popular);
+    }
     if (req.query.council) {
         query.where('council', req.query.council);
     }
@@ -118,8 +121,9 @@ exports.update = (req, res) => {
     if (!req.body) {
         return res.status(400).send({ message: "PostcodeDistrict body can not be empty" });
     }
+    const filter = { _id: req.params.id };
     // Find PostcodeDistrict and update it with the request body
-    PostcodeDistrict.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true })
+    PostcodeDistrict.findOneAndUpdate(filter, { $set: req.body }, { new: true })
         .then(sd => {
             if (!sd) {
                 return notFound(req, res);
@@ -137,7 +141,7 @@ exports.update = (req, res) => {
 
 // Delete a PostcodeDistrict with the specified MenuId in the request
 exports.delete = (req, res) => {
-    PostcodeDistrict.findByIdAndRemove(req.params.id)
+    PostcodeDistrict.findByIdAndDelete(req.params.id)
         .then(sd => {
             if (!sd) {
                 return notFound(req, res);
@@ -199,6 +203,7 @@ function buildPostcodeDistrictObject(req) {
 function buildPostcodeDistrictJson(req) {
     return {
         active: true,
+        popular: req.body.popular,
         prefix: req.body.prefix,
         area: req.body.area,
         coverage: req.body.coverage,

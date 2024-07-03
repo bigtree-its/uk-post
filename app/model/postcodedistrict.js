@@ -3,6 +3,7 @@ var mongoose = require('mongoose');
 // Define a Schema for our PostcodeDistrict collection
 const PostcodeDistrictSchema = new mongoose.Schema({
     active: Boolean,
+    popular: Boolean,
     // Generally area will be The City e,g G for Glasgow
     area: { type: String, trim: true },
     // G76
