@@ -3,15 +3,16 @@ const { parse } = require("csv-parse");
 const PostcodeDistrict = require('../model/postcodedistrict');
 
 exports.loadCsv = (req, res) => {
-    console.log("Reading csv file");
+    console.log("Reading csv file from "+ req.query.fileLocation);
     fs.createReadStream(req.query.fileLocation)
         // .pipe(parse({ delimiter: ",", from_line: 1, to_line: 5 }))
+        // Line 1 is actual line 1 of the file. If line 1 contains header, the please start from line 2 here, or remove  header line from file
         .pipe(parse({ delimiter: ",", from_line: 1, }))
         .on("data", function(row) {
             req.body.area = req.query.area;
             req.body.prefix = row[0];
             req.body.coverage = row[1];
-            req.body.council = row[2];
+            req.body.city = row[2];
             persistPostcodeDistrict(req);
         })
         .on("end", function() {
@@ -57,7 +58,9 @@ function buildPostcodeDistrictJson(req) {
         prefix: req.body.prefix,
         area: req.body.area,
         coverage: req.body.coverage,
-        council: req.body.council,
+        city: req.body.city,
+        popular: false,
+        acrive: true,
         slug: req.body.slug || getSlug(req.body.prefix, req.body.coverage)
     };
 }

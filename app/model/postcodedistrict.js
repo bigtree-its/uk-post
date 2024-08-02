@@ -10,10 +10,8 @@ const PostcodeDistrictSchema = new mongoose.Schema({
     prefix: { type: String, trim: true },
     // The localities e.g Clarkston, Waterfoot, Busby
     coverage: { type: String, trim: true },
-    // The county e.g East Renfrewshire
-    council: { type: String, trim: true },
     // The city.eg. Glasgow
-    postTown: { type: String, trim: true },
+    city: { type: String, trim: true },
     slug: { type: String, trim: true },
 }, {
     timestamps: true

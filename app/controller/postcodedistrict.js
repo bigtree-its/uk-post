@@ -56,18 +56,15 @@ exports.validateArea = async(req, res) => {
 // Retrieve and return all PostcodeDistrict from the database.
 exports.lookup = (req, res) => {
     let query = PostcodeDistrict.find();
-    if (req.query.area) {
-        query.where('area', req.query.area);
+    if (req.query.city) {
+        query.where('city', req.query.city);
     }
     if (req.query.prefix) {
-        // query.where('prefix', req.query.prefix);
-        query.where({ 'prefix': { '$regex': req.query.prefix, $options: 'i' } });
+        query.where('prefix', req.query.prefix);
+        // query.where({ 'prefix': { '$regex': req.query.prefix, $options: 'i' } });
     }
     if (req.query.popular) {
         query.where('popular', req.query.popular);
-    }
-    if (req.query.council) {
-        query.where('council', req.query.council);
     }
     if (req.query.coverage) {
         query.where({ 'coverage': { '$regex': req.query.coverage, $options: 'i' } });
@@ -87,8 +84,16 @@ exports.lookup = (req, res) => {
 
 // Deletes all
 exports.deleteEverything = (req, res) => {
-    PostcodeDistrict.deleteMany().then(result => {
-        res.send({ message: "Deleted all PostcodeDistricts" });
+    let query = PostcodeDistrict.find();
+    if (req.query.city) {
+        query.where('city', req.query.city);
+    }
+    if (req.query.prefix) {
+        query.where('prefix', req.query.prefix);
+    }
+    PostcodeDistrict.deleteMany(query).then(result => {
+        console.log("Deleted: "+ JSON.stringify(result))
+        res.send({ message: "Deleted PostcodeDistricts" });
     }).catch(err => {
         return res.status(500).send({
             message: `Could not delete all PostcodeDistricts. ${err.message}`
